@@ -1,0 +1,16 @@
+body {
+    font-family: "Work Sans", sans-serif;
+}
+
+.header {
+    display: flex;
+}
+
+.header h2 {
+    margin-right: auto;
+    font-weight: 600;
+}
+
+th {
+    text-transform: uppercase;
+}
