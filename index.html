@@ -4,15 +4,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Train Scheduler</title>
+    <!--Firebase JS SDK-->
+    <script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-app.js"></script>
+
+    <!-- Initialize Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-database.js"></script>
 
     <!--jQuery-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     
     <!--Fonts-->
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     
     <!--Bootstrap-->
-    
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -26,40 +31,33 @@
     <div class="main-container">
         <div class="header">
             <h2>Train Scheduler</h2>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">
-                + Add New Train
-            </button>
+            <div class="add-button" data-toggle="modal" data-target="#modal">
+                + Add Train
+            </div>
         </div>
-        <table class="table table-striped">
+        <table class="schedule">
             <thead>
                 <tr>
-                    <th scope="col">Train Name</th>
-                    <th scope="col">Destination</th>
-                    <th scope="col">Frequency (min)</th>
-                    <th scope="col">Next Arrival</th>
-                    <th scope="col">Minutes Away</th>
+                    <th>Train</th>
+                    <th>Destination</th>
+                    <th>Frequency (min)</th>
+                    <th>Next Arrival</th>
+                    <th>Minutes Away</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <th scope="row">1</th>
+                    <td class="train-name">Texas Eagle</td>
                     <td>Mark</td>
                     <td>Otto</td>
                     <td>@mdo</td>
                     <td>@mdo</td>
                 </tr>
                 <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
+                    <td class="train-name">Texas Eagle</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
                     <td>@mdo</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
                     <td>@mdo</td>
                 </tr>
             </tbody>
@@ -68,35 +66,42 @@
 
     <!--Bootstrap Modal-->
     <div class="modal fade" tabindex="-1" role="dialog" id="modal">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
+                    <h5 class="modal-title">Add A New Train</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <i class="fa fa-times" aria-hidden="true"></i>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    <form class="schedule-form">
+                        <div class="row">
+                            <div class="col-6">
+                                <label>Train Name</label><br>
+                                <input type="text" id="train-name" placeholder="Acela Express" required>
+                            </div>
+                            <div class="col-6">
+                                <label>Destination</label><br>
+                                <input type="text" id="destination" placeholder="New York City, NY" required>
+                            </div>
+                            <div class="col-6">
+                                <label>First Train Time</label><br>
+                                <input type="text" id="first-train-time" placeholder="HH:MM - Millitary Time" required>
+                            </div>
+                            <div class="col-6">
+                                <label>Frequency (min)</label><br>
+                                <input type="number" id="frequency" placeholder="40" required>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <input type="submit" class="submit-form">
                     </form>
                 </div>
-                <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div> -->
             </div>
         </div>
     </div>
+
+    <!--Javascript-->
     <script type="text/javascript" src="assets/javascript/app.js"></script>
 </body>
 </html>

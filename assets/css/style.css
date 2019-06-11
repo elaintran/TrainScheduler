@@ -1,9 +1,17 @@
 body {
     font-family: "Work Sans", sans-serif;
+    background-color: #f2f5f8;
+	color: #4b4b4b;
+}
+
+.main-container {
+    margin: 0px 10%;
 }
 
 .header {
     display: flex;
+    align-items: center;
+    margin-top: 50px;
 }
 
 .header h2 {
@@ -11,6 +19,174 @@ body {
     font-weight: 600;
 }
 
+.add-button {
+	margin: 0;
+	text-transform: uppercase;
+	font-weight: 600;
+	color: white;
+    background-color: #4886ff;
+    height: 33px;
+	padding: 0px 15px;
+	border-radius: 30px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.add-button:hover {
+	cursor: pointer;
+	opacity: 0.9;
+}
+
+.schedule {
+    width: 100%;
+    font-size: 12px;
+    margin-top: 25px;
+}
+
+table {
+    text-align: center;
+}
+
 th {
     text-transform: uppercase;
+    font-weight: 600;
+}
+
+th, td {
+    padding: 20px 4px;
+}
+
+thead tr,
+tbody tr:nth-child(even) {
+    background-color: white;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #fafbfd;
+}
+
+table {
+    border-collapse: collapse;
+    border-radius: 1em;
+    overflow: hidden;
+    box-shadow: 0px 2px 20px 2px rgba(0, 0, 0, 0.02);
+}
+
+/* 
+table tr:first-child th:first-child {
+    border-top-left-radius: 10px;
+}
+
+table tr:first-child th:last-child {
+    border-top-right-radius: 10px;
+}
+    
+table tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+    
+table tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+} */
+
+.train-name {
+    font-weight: 600;
+}
+
+#modal .modal-title {
+	text-align: center;
+	font-weight: 600;
+	margin-top: 0;
+	/*border-bottom: 1px solid #f5f5f5;
+	padding-bottom: 25px;*/
+}
+
+.schedule-form {
+	padding: 0px 15px 10px;
+}
+
+.schedule-form label {
+	font-weight: 600;
+	text-transform: uppercase;
+	font-size: 12px;
+}
+
+.schedule-form input[type=text],
+.schedule-form input[type=number] {
+	background-color: #f5f5f5;
+	border: 1px solid transparent;
+	width: 100%;
+	margin-bottom: 20px;
+	padding: 0 12px;
+	height: 35px;
+	font-weight: 600;
+	font-size: 12px;
+}
+
+.schedule-form input[type=text]::placeholder,
+.schedule-form input[type=number]::placeholder {
+	font-weight: 600;
+	color: #878686;
+	font-size: 12px;
+}
+
+.schedule-form input[type=text]:active,
+.schedule-form input[type=text]:focus,
+.schedule-form input[type=number]:active,
+.schedule-form input[type=number]:focus,
+.submit-form:active,
+.submit-form:focus {
+	outline: none;
+}
+
+.submit-form {
+	margin: 5px 15px;
+	width: calc(100% - 30px);
+	background-color: #4886ff;
+	color: white;
+	border: 1px solid transparent;
+	text-transform: uppercase;
+	font-weight: 600;
+	font-size: 12px;
+	padding: 7px;
+	border-radius: 20px;
+}
+
+.submit-form:hover {
+	cursor: pointer;
+}
+
+.submit-form:hover {
+	opacity: 0.9;
+}
+
+.modal-header {
+	padding: 20px;
+}
+
+.modal-header .close {
+	position: absolute;
+	right: 0;
+	padding: 0!important;
+	margin: -5px 15px;
+	font-size: 15px;
+}
+
+.modal-header .close:active, .modal-header .close:focus {
+	outline: none;
+}
+
+.modal-title {
+	margin: auto;
+	font-size: 25px;
+}
+
+.modal-content {
+	border: 0px solid transparent;
+	border-radius: 10px;
+}
+
+.modal-body {
+	padding-bottom: 25px;
 }
