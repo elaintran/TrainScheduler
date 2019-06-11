@@ -1,5 +1,4 @@
 //put into array
-//append to table
 //maybe check letter casing and rewrite in camelcase
 //check if numbers are in the right format
 //if not, give an error message
@@ -14,7 +13,7 @@ const firebaseConfig = {
     storageBucket: "minimal-train-scheduler.appspot.com",
     messagingSenderId: "560193805039",
     appId: "1:560193805039:web:6b9344bb4c960f9f"
-  };
+};
 
 //global variables
 var nameList = [];
@@ -28,6 +27,7 @@ $(".schedule-form").on("submit", function(event) {
     var destination = $("#destination").val().trim();
     var firstTrainTime = $("#first-train-time").val().trim();
     var frequency = $("#frequency").val().trim();
+    //append a new row containing the form input to table
     var rowElement = $("<tr>");
     var nameCell = $("<td>").text(trainName);
     var destinationCell = $("<td>").text(destination);
@@ -35,10 +35,12 @@ $(".schedule-form").on("submit", function(event) {
     rowElement.append(nameCell).append(destinationCell).append(frequencyCell);
     $("tbody").append(rowElement);
     //if none of the form fields are empty
-    if ($("#train-name").val() !== "" &&
-        $("#destination").val() !== "" &&
-        $("#first-train-time").val() !== "" &&
-        $("#frequency").val() !== "") {
+    if (trainName !== "" && destination !== "" && firstTrainTime !== "" && frequency !== "") {
+        //clear values on form
+        $("#train-name").val("");
+        $("#destination").val("");
+        $("#first-train-time").val("");
+        $("#frequency").val("");
         //hide modal on submit
         $("#modal").modal("hide");
     }
