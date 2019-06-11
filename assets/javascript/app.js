@@ -34,4 +34,12 @@ $(".schedule-form").on("submit", function(event) {
     var frequencyCell = $("<td>").text(frequency);
     rowElement.append(nameCell).append(destinationCell).append(frequencyCell);
     $("tbody").append(rowElement);
+    //if none of the form fields are empty
+    if ($("#train-name").val() !== "" &&
+        $("#destination").val() !== "" &&
+        $("#first-train-time").val() !== "" &&
+        $("#frequency").val() !== "") {
+        //hide modal on submit
+        $("#modal").modal("hide");
+    }
 })
