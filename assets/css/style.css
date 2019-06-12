@@ -57,6 +57,10 @@ table {
     position: static;
 }
 
+.dropdown-item:hover {
+    cursor: pointer;
+}
+
 table i {
     margin: 0 10px;
 }

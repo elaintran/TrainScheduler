@@ -19,6 +19,7 @@ var newTrainTime;
 var newFrequency;
 var minutesLeft;
 var trainArrival;
+var refKey;
 
 //when form is submitted, get values
 $(".schedule-form").on("submit", function(event) {
@@ -29,20 +30,6 @@ $(".schedule-form").on("submit", function(event) {
     var destination = $("#destination").val().trim();
     var firstTrainTime = $("#first-train-time").val().trim();
     var frequency = $("#frequency").val().trim();
-    //create train object
-    var newTrain = {
-        train: trainName,
-        destination: destination,
-        firstTrainTime: firstTrainTime,
-        frequency: frequency
-    }
-    //push new train into database
-    database.ref().push(newTrain);
-    //clear all fields
-    clearForm();
-})
-
-function clearForm() {
     //if none of the form fields are empty
     if (trainName !== "" && destination !== "" && firstTrainTime !== "" && frequency !== "") {
         //clear values on form
@@ -53,7 +40,16 @@ function clearForm() {
         //hide modal on submit
         $("#modal").modal("hide");
     }
-}
+    //create train object
+    var newTrain = {
+        train: trainName,
+        destination: destination,
+        firstTrainTime: firstTrainTime,
+        frequency: frequency
+    }
+    //push new train into database
+    database.ref().push(newTrain);
+})
 
 //when object is added into the database
 database.ref().on("child_added", function(snapshot) {
@@ -62,6 +58,8 @@ database.ref().on("child_added", function(snapshot) {
     newDestination = snapshot.val().destination;
     newTrainTime = snapshot.val().firstTrainTime;
     newFrequency = snapshot.val().frequency;
+    refKey = snapshot.key;
+    console.log(refKey);
     //use database items to find arrival time and minutes away
     //initial train time, subtracted one year off so it comes before current time
     var trainTimeConverted = moment(newTrainTime, "hh:mm").subtract(1, "years");
@@ -79,7 +77,7 @@ database.ref().on("child_added", function(snapshot) {
 
 function createTrain() {
     //append the rows to table
-    var rowElement = $("<tr>");
+    var rowElement = $("<tr>").attr("data-key", refKey);
     //individual datacells containing information from form
     var nameCell = $("<td>").addClass("train-name").text(newTrain);
     var destinationCell = $("<td>").text(newDestination);
@@ -91,8 +89,8 @@ function createTrain() {
     var actionIcon = $("<i>").addClass("fas fa-ellipsis-h").attr("data-toggle", "dropdown");
     //dropdown menu
     var dropdownContainer = $("<div>").addClass("dropdown-menu dropdown-menu-right").attr("aria-labelledby", "dropdownMenuButton");
-    var dropdownItemOne = $("<div>").addClass("dropdown-item");
-    var dropdownItemTwo = $("<div>").addClass("dropdown-item");
+    var dropdownItemOne = $("<div>").addClass("dropdown-item edit-train");
+    var dropdownItemTwo = $("<div>").addClass("dropdown-item delete-train");
     //menu-items
     var editIcon = $("<i>").addClass("fas fa-pen");
     var trashIcon = $("<i>").addClass("fas fa-trash");
@@ -103,3 +101,9 @@ function createTrain() {
     rowElement.append(nameCell).append(destinationCell).append(frequencyCell).append(arrivalCell).append(minutesCell).append(actionCell);
     $("tbody").append(rowElement);
 }
+
+$("tbody").on("click", ".delete-train", function() {
+    var key = $(this).parents("tr").attr("data-key");
+    $(this).parentsUntil("tbody").remove();
+    database.ref(key).remove();
+})
