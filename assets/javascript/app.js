@@ -33,6 +33,15 @@ $(".schedule-form").on("submit", function(event) {
     destination = $("#destination").val().trim();
     firstTrainTime = $("#first-train-time").val().trim();
     frequency = $("#frequency").val().trim();
+    //create train object
+    var newTrain = {
+        train: trainName,
+        destination: destination,
+        firstTrainTime: firstTrainTime,
+        frequency: frequency
+    }
+    //push new train into database
+    database.ref().push(newTrain);
     //add train to schedule
     addTrain();
     //clear all fields
@@ -45,10 +54,10 @@ function addTrain() {
     var nameCell = $("<td>").addClass("train-name").text(trainName);
     var destinationCell = $("<td>").text(destination);
     var frequencyCell = $("<td>").text(frequency);
-    var deleteCell = $("<td>");
-    var deleteIcon = $("<i>").addClass("fas fa-trash");
-    deleteCell.append(deleteIcon);
-    rowElement.append(nameCell).append(destinationCell).append(frequencyCell).append(deleteCell);
+    var actionCell = $("<td>");
+    var actionIcon = $("<i>").addClass("fas fa-ellipsis-h");
+    actionCell.append(actionIcon);
+    rowElement.append(nameCell).append(destinationCell).append(frequencyCell).append(actionCell);
     $("tbody").append(rowElement);
 }
 
@@ -64,3 +73,7 @@ function clearForm() {
         $("#modal").modal("hide");
     }
 }
+
+$("table i").on("click", function() {
+    $(".dropdown").show();
+})

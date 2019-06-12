@@ -71,7 +71,27 @@ table {
     border-radius: 1em;
     overflow: hidden;
     box-shadow: 0px 2px 20px 2px rgba(0, 0, 0, 0.02);
+    overflow: auto;
 }
+
+table i {
+    margin: 0 10px;
+}
+
+table i:hover {
+    cursor: pointer;
+}
+
+/* td {
+    position: relative;
+} */
+
+/* .dropdown {
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    overflow: visible;
+} */
 
 .train-name {
     font-weight: 600;

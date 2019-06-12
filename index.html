@@ -43,7 +43,7 @@
                     <th>Frequency (min)</th>
                     <th>Next Arrival</th>
                     <th>Minutes Away</th>
-                    <th>Actions</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -53,7 +53,13 @@
                     <td>Otto</td>
                     <td>@mdo</td>
                     <td>@mdo</td>
-                    <td><i class="fas fa-trash"></i></td>
+                    <td class="dropdown">
+                        <i class="fas fa-ellipsis-h" data-toggle="dropdown"></i>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#"><i class="fas fa-pen"></i> Edit Train</a>
+                                <a class="dropdown-item" href="#"><i class="fas fa-trash"></i> Delete Train</a>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td class="train-name">Texas Eagle</td>
@@ -61,7 +67,7 @@
                     <td>Otto</td>
                     <td>@mdo</td>
                     <td>@mdo</td>
-                    <td><i class="fas fa-trash"></i></td>
+                    <td><i class="fas fa-ellipsis-h"></i></td>
                 </tr>
             </tbody>
         </table>
