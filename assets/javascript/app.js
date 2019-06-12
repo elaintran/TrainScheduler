@@ -1,9 +1,3 @@
-//put into array
-//maybe check letter casing and rewrite in camelcase
-//check if numbers are in the right format
-//if not, give an error message
-//store the information in firebase
-
 //firebase config
 const config = {
     apiKey: "AIzaSyBw9TjCqqffgXP-TKUUFiNQlbSIoqf2drQ",
@@ -19,20 +13,22 @@ firebase.initializeApp(config);
 var database = firebase.database();
 
 //global variables
-var trainName;
-var destination;
-var firstTrainTime;
-var frequency;
+var newTrain;
+var newDestination;
+var newTrainTime;
+var newFrequency;
+var minutesLeft;
+var trainArrival;
 
 //when form is submitted, get values
 $(".schedule-form").on("submit", function(event) {
     //prevent page from refreshing
     event.preventDefault();
     //get values from form fields and trim the white space
-    trainName = $("#train-name").val().trim();
-    destination = $("#destination").val().trim();
-    firstTrainTime = $("#first-train-time").val().trim();
-    frequency = $("#frequency").val().trim();
+    var trainName = $("#train-name").val().trim();
+    var destination = $("#destination").val().trim();
+    var firstTrainTime = $("#first-train-time").val().trim();
+    var frequency = $("#frequency").val().trim();
     //create train object
     var newTrain = {
         train: trainName,
@@ -42,24 +38,9 @@ $(".schedule-form").on("submit", function(event) {
     }
     //push new train into database
     database.ref().push(newTrain);
-    //add train to schedule table
-    addTrain();
     //clear all fields
     clearForm();
 })
-
-function addTrain() {
-    //append a new row containing the form input to table
-    var rowElement = $("<tr>");
-    var nameCell = $("<td>").addClass("train-name").text(trainName);
-    var destinationCell = $("<td>").text(destination);
-    var frequencyCell = $("<td>").text(frequency);
-    var actionCell = $("<td>");
-    var actionIcon = $("<i>").addClass("fas fa-ellipsis-h");
-    actionCell.append(actionIcon);
-    rowElement.append(nameCell).append(destinationCell).append(frequencyCell).append(actionCell);
-    $("tbody").append(rowElement);
-}
 
 function clearForm() {
     //if none of the form fields are empty
@@ -76,5 +57,49 @@ function clearForm() {
 
 //when object is added into the database
 database.ref().on("child_added", function(snapshot) {
-
+    //set snapshot values as variables
+    newTrain = snapshot.val().train;
+    newDestination = snapshot.val().destination;
+    newTrainTime = snapshot.val().firstTrainTime;
+    newFrequency = snapshot.val().frequency;
+    //use database items to find arrival time and minutes away
+    //initial train time, subtracted one year off so it comes before current time
+    var trainTimeConverted = moment(newTrainTime, "hh:mm").subtract(1, "years");
+    //subtract current time from first train time and return result in minutes
+    var diffTime = moment().diff(moment(trainTimeConverted), "minutes");
+    //use modulus to get the remainder, which is the number of minutes left 
+    var timeRemainder = diffTime % newFrequency;
+    //time from the frequency
+    minutesLeft = newFrequency - timeRemainder;
+    //add minutes left to current time and return result in minutes
+    trainArrival = moment().add(minutesLeft, "minutes").format("hh:mm");
+    //append to table
+    createTrain();
 })
+
+function createTrain() {
+    //append the rows to table
+    var rowElement = $("<tr>");
+    //individual datacells containing information from form
+    var nameCell = $("<td>").addClass("train-name").text(newTrain);
+    var destinationCell = $("<td>").text(newDestination);
+    var frequencyCell = $("<td>").text(newFrequency);
+    var arrivalCell = $("<td>").text(trainArrival);
+    var minutesCell = $("<td>").text(minutesLeft);
+    //ellipses icon toggle for dropdown
+    var actionCell = $("<td>").addClass("dropdown");
+    var actionIcon = $("<i>").addClass("fas fa-ellipsis-h").attr("data-toggle", "dropdown");
+    //dropdown menu
+    var dropdownContainer = $("<div>").addClass("dropdown-menu dropdown-menu-right").attr("aria-labelledby", "dropdownMenuButton");
+    var dropdownItemOne = $("<div>").addClass("dropdown-item");
+    var dropdownItemTwo = $("<div>").addClass("dropdown-item");
+    //menu-items
+    var editIcon = $("<i>").addClass("fas fa-pen");
+    var trashIcon = $("<i>").addClass("fas fa-trash");
+    dropdownItemOne.text(" Edit Train").prepend(editIcon);
+    dropdownItemTwo.text(" Remove Train").prepend(trashIcon);
+    dropdownContainer.append(dropdownItemOne).append(dropdownItemTwo);
+    actionCell.append(actionIcon).append(dropdownContainer);
+    rowElement.append(nameCell).append(destinationCell).append(frequencyCell).append(arrivalCell).append(minutesCell).append(actionCell);
+    $("tbody").append(rowElement);
+}
