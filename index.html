@@ -12,6 +12,9 @@
 
     <!--jQuery-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!--Moment-->
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
     
     <!--Fonts-->
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,600,700&display=swap" rel="stylesheet">
@@ -35,42 +38,44 @@
                 + Add Train
             </div>
         </div>
-        <table class="schedule">
-            <thead>
-                <tr>
-                    <th>Train</th>
-                    <th>Destination</th>
-                    <th>Frequency (min)</th>
-                    <th>Next Arrival</th>
-                    <th>Minutes Away</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="train-name">Texas Eagle</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                    <td class="dropdown">
-                        <i class="fas fa-ellipsis-h" data-toggle="dropdown"></i>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#"><i class="fas fa-pen"></i> Edit Train</a>
-                                <a class="dropdown-item" href="#"><i class="fas fa-trash"></i> Delete Train</a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="train-name">Texas Eagle</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                    <td><i class="fas fa-ellipsis-h"></i></td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="schedule">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Train</th>
+                        <th>Destination</th>
+                        <th>Frequency (min)</th>
+                        <th>Next Arrival</th>
+                        <th>Minutes Away</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="train-name">Texas Eagle</td>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                        <td class="dropdown">
+                            <i class="fas fa-ellipsis-h" data-toggle="dropdown"></i>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#"><i class="fas fa-pen"></i> Edit Train</a>
+                                    <a class="dropdown-item" href="#"><i class="fas fa-trash"></i> Delete Train</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="train-name">Texas Eagle</td>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                        <td><i class="fas fa-ellipsis-h"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <!--Bootstrap Modal-->

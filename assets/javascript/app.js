@@ -42,7 +42,7 @@ $(".schedule-form").on("submit", function(event) {
     }
     //push new train into database
     database.ref().push(newTrain);
-    //add train to schedule
+    //add train to schedule table
     addTrain();
     //clear all fields
     clearForm();
@@ -74,6 +74,7 @@ function clearForm() {
     }
 }
 
-$("table i").on("click", function() {
-    $(".dropdown").show();
+//when object is added into the database
+database.ref().on("child_added", function(snapshot) {
+
 })
