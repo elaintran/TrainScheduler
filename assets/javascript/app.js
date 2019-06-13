@@ -125,7 +125,7 @@ database.ref().on("child_changed", function(snapshot) {
             $(this).children(".train-cell").text(newTrain);
             $(this).children(".destination-cell").text(newDestination);
             $(this).children(".frequency-cell").text(newFrequency);
-            $(this).children(".arrival-cell").text(trainArrival);
+            $(this).children(".arrival-cell").attr("data-time", newTrainTime).text(trainArrival);
             $(this).children(".minutes-cell").text(minutesLeft);
         }
     })
