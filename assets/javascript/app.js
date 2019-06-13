@@ -57,15 +57,15 @@ database.ref().on("child_added", function(snapshot) {
 
 function createTrain() {
     //append the rows to table
-    var rowElement = $("<tr>").attr("data-key", refKey);
+    var rowElement = $("<div>").attr("data-key", refKey).addClass("train-row");
     //individual datacells containing information from form
-    var nameCell = $("<td>").addClass("train-cell").text(newTrain);
-    var destinationCell = $("<td>").addClass("destination-cell").text(newDestination);
-    var frequencyCell = $("<td>").addClass("frequency-cell").text(newFrequency);
-    var arrivalCell = $("<td>").attr("data-time", newTrainTime).addClass("arrival-cell").text(trainArrival);
-    var minutesCell = $("<td>").addClass("minutes-cell").text(minutesLeft);
+    var nameCell = $("<div>").addClass("train-item train-cell").text(newTrain);
+    var destinationCell = $("<div>").addClass("train-item destination-cell").text(newDestination);
+    var frequencyCell = $("<div>").addClass("train-item frequency-cell").text(newFrequency);
+    var arrivalCell = $("<div>").attr("data-time", newTrainTime).addClass("train-item arrival-cell").text(trainArrival);
+    var minutesCell = $("<div>").addClass("train-item minutes-cell").text(minutesLeft);
     //ellipses icon toggle for dropdown
-    var actionCell = $("<td>").addClass("dropdown");
+    var actionCell = $("<div>").addClass("action dropdown");
     var actionIcon = $("<i>").addClass("fas fa-ellipsis-h").attr("data-toggle", "dropdown");
     //dropdown menu
     var dropdownContainer = $("<div>").addClass("dropdown-menu dropdown-menu-right").attr("aria-labelledby", "dropdownMenuButton");
@@ -83,28 +83,29 @@ function createTrain() {
     dropdownContainer.append(dropdownItemOne).append(dropdownItemTwo);
     actionCell.append(actionIcon).append(dropdownContainer);
     rowElement.append(nameCell).append(destinationCell).append(frequencyCell).append(arrivalCell).append(minutesCell).append(actionCell);
-    $("tbody").append(rowElement);
+    $(".schedule").append(rowElement);
 }
 
 //delete train from row
-$("tbody").on("click", ".delete-train", function() {
+$(".schedule").on("click", ".delete-train", function() {
     //get the key for the current train from the data attribute
-    key = $(this).parents("tr").attr("data-key");
+    key = $(this).parents(".train-row").attr("data-key");
+    //console.log(key);
     //remove all of the elements before tbody
-    $(this).parentsUntil("tbody").remove();
+    $(this).parentsUntil(".schedule").remove();
     //use the key to remove from database
     database.ref(key).remove();
 })
 
 //edit train row
-$("tbody").on("click", ".edit-train", function() {
+$(".schedule").on("click", ".edit-train", function() {
     //get key to change specific area of database
-    key = $(this).parents("tr").attr("data-key");
+    key = $(this).parents(".train-row").attr("data-key");
     //get the current text of the train
-    var editName = $(this).parents("td").siblings(".train-cell").text();
-    var editDestination = $(this).parents("td").siblings(".destination-cell").text();
-    var editFrequency = $(this).parents("td").siblings(".frequency-cell").text();
-    var editTrainTime = $(this).parents("td").siblings(".arrival-cell").attr("data-time");
+    var editName = $(this).parents(".action").siblings(".train-cell").text();
+    var editDestination = $(this).parents(".action").siblings(".destination-cell").text();
+    var editFrequency = $(this).parents(".action").siblings(".frequency-cell").text();
+    var editTrainTime = $(this).parents(".action").siblings(".arrival-cell").attr("data-time");
     //use the text and place it as the edit value
     $("#edit-name").val(editName);
     $("#edit-destination").val(editDestination);
@@ -120,7 +121,7 @@ $(".edit-form").on("submit", function(event) {
 
 database.ref().on("child_changed", function(snapshot) {
     convertTime(snapshot);
-    $("tr").each(function() {
+    $(".train-row").each(function() {
         if($(this).attr("data-key") === key) {
             $(this).children(".train-cell").text(newTrain);
             $(this).children(".destination-cell").text(newDestination);

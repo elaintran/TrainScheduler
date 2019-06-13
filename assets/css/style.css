@@ -76,23 +76,17 @@ body {
     width: 8%;
 }
 
-.train-name {
+.train-cell {
     font-weight: 600;
 }
 
-/* .schedule {
-    border-radius: 20px;
+.action i {
+    margin: 0 10px;
+    font-size: 13px;
 }
 
-table {
-    border-collapse: collapse;
-    border-radius: 1em;
-    box-shadow: 0px 2px 20px 2px rgba(0, 0, 0, 0.02);
-    overflow: hidden;
-    width: 100%;
-    font-size: 12px;
-    margin-top: 25px;
-    text-align: center;
+.action i:hover {
+    cursor: pointer;
 }
 
 .dropdown {
@@ -114,13 +108,20 @@ table {
     cursor: pointer;
 }
 
-table i {
-    margin: 0 10px;
-    font-size: 13px;
+
+/* .schedule {
+    border-radius: 20px;
 }
 
-table i:hover {
-    cursor: pointer;
+table {
+    border-collapse: collapse;
+    border-radius: 1em;
+    box-shadow: 0px 2px 20px 2px rgba(0, 0, 0, 0.02);
+    overflow: hidden;
+    width: 100%;
+    font-size: 12px;
+    margin-top: 25px;
+    text-align: center;
 }
 
 th {
