@@ -48,6 +48,7 @@ $(".schedule-form").on("submit", function(event) {
 
 //when object is added into the database
 database.ref().on("child_added", function(snapshot) {
+    //get key to select positions of the table to edit and remove
     refKey = snapshot.key;
     convertTime(snapshot);
     //append to table
@@ -85,18 +86,26 @@ function createTrain() {
     $("tbody").append(rowElement);
 }
 
+//delete train from row
 $("tbody").on("click", ".delete-train", function() {
+    //get the key for the current train from the data attribute
     key = $(this).parents("tr").attr("data-key");
+    //remove all of the elements before tbody
     $(this).parentsUntil("tbody").remove();
+    //use the key to remove from database
     database.ref(key).remove();
 })
 
+//edit train row
 $("tbody").on("click", ".edit-train", function() {
+    //get key to change specific area of database
     key = $(this).parents("tr").attr("data-key");
+    //get the current text of the train
     var editName = $(this).parents("td").siblings(".train-cell").text();
     var editDestination = $(this).parents("td").siblings(".destination-cell").text();
     var editFrequency = $(this).parents("td").siblings(".frequency-cell").text();
     var editTrainTime = $(this).parents("td").siblings(".arrival-cell").attr("data-time");
+    //use the text and place it as the edit value
     $("#edit-name").val(editName);
     $("#edit-destination").val(editDestination);
     $("#edit-frequency").val(editFrequency);
@@ -107,21 +116,19 @@ $(".edit-form").on("submit", function(event) {
     event.preventDefault();
     getValues("#edit-name", "#edit-destination", "#edit-train-time", "#edit-frequency", "#edit-modal");
     database.ref(key).set(addTrain);
-    edit = true;
 })
 
 database.ref().on("child_changed", function(snapshot) {
+    convertTime(snapshot);
     $("tr").each(function() {
         if($(this).attr("data-key") === key) {
-            convertTime(snapshot);
             $(this).children(".train-cell").text(newTrain);
             $(this).children(".destination-cell").text(newDestination);
             $(this).children(".frequency-cell").text(newFrequency);
-            $(this).children("arrival-cell").text(trainArrival);
-            console.log($(this).children("minutes-cell").text());
+            $(this).children(".arrival-cell").text(trainArrival);
+            $(this).children(".minutes-cell").text(minutesLeft);
         }
     })
-    console.log(snapshot.val());
 })
 
 function getValues(trainName, trainDestination, trainTime, trainFrequency, modal) {
@@ -163,5 +170,4 @@ function convertTime(snapshot) {
 }
 
 //BUGS TO FIX
-//trainarrival and minutes left does not change when the content is changed
 //change dropdown menu to round corners on select
