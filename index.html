@@ -56,7 +56,7 @@
         </div>
     </div>
 
-    <!--Bootstrap Modal-->
+    <!--Create Train Modal-->
     <div class="modal fade" tabindex="-1" role="dialog" id="modal">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -67,7 +67,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form class="schedule-form">
+                    <form class="schedule-form train-form">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-6">
@@ -80,7 +80,7 @@
                                 </div>
                                 <div class="col-6">
                                     <label>First Train Time</label><br>
-                                    <input type="text" id="first-train-time" placeholder="HH:MM - Millitary Time" required>
+                                    <input type="text" id="first-train-time" placeholder="HH:MM - Military Time" required>
                                 </div>
                                 <div class="col-6">
                                     <label>Frequency (min)</label><br>
@@ -94,6 +94,45 @@
             </div>
         </div>
     </div>
+
+    <!--Edit Train Modal-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="edit-modal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Train</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="edit-form train-form">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label>Train Name</label><br>
+                                    <input type="text" id="edit-name" placeholder="Acela Express" required>
+                                </div>
+                                <div class="col-6">
+                                    <label>Destination</label><br>
+                                    <input type="text" id="edit-destination" placeholder="New York City, NY" required>
+                                </div>
+                                <div class="col-6">
+                                    <label>First Train Time</label><br>
+                                    <input type="text" id="edit-train-time" placeholder="HH:MM - Military Time" required>
+                                </div>
+                                <div class="col-6">
+                                    <label>Frequency (min)</label><br>
+                                    <input type="number" id="edit-frequency" placeholder="40" required>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="submit" class="submit-form">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>    
 
     <!--Javascript-->
     <script type="text/javascript" src="assets/javascript/app.js"></script>

@@ -57,12 +57,24 @@ table {
     position: static;
 }
 
+.dropdown-menu {
+    border: 1px solid #ecedf1;
+    padding: 0;
+}
+
+.dropdown-item {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 12px 10px;
+}
+
 .dropdown-item:hover {
     cursor: pointer;
 }
 
 table i {
     margin: 0 10px;
+    font-size: 13px;
 }
 
 table i:hover {
@@ -87,33 +99,29 @@ tbody tr:nth-child(odd) {
     background-color: #fafbfd;
 }
 
-.dropdown-item {
-    padding: .25rem 10px;
-}
-
-.train-name {
+.train-cell {
     font-weight: 600;
 }
 
-#modal .modal-title {
+.modal-title {
 	text-align: center;
 	font-weight: 600;
 	margin-top: 0;
 }
 
-.schedule-form {
+.train-form {
     padding: 0px 15px 10px;
     margin-bottom: 0px;
 }
 
-.schedule-form label {
+.train-form label {
 	font-weight: 600;
 	text-transform: uppercase;
 	font-size: 12px;
 }
 
-.schedule-form input[type=text],
-.schedule-form input[type=number] {
+.train-form input[type=text],
+.train-form input[type=number] {
 	background-color: #f5f5f5;
 	border: 1px solid transparent;
 	width: 100%;
@@ -124,17 +132,17 @@ tbody tr:nth-child(odd) {
 	font-size: 12px;
 }
 
-.schedule-form input[type=text]::placeholder,
-.schedule-form input[type=number]::placeholder {
+.train-form input[type=text]::placeholder,
+.train-form input[type=number]::placeholder {
 	font-weight: 600;
 	color: #878686;
 	font-size: 12px;
 }
 
-.schedule-form input[type=text]:active,
-.schedule-form input[type=text]:focus,
-.schedule-form input[type=number]:active,
-.schedule-form input[type=number]:focus,
+.train-form input[type=text]:active,
+.train-form input[type=text]:focus,
+.train-form input[type=number]:active,
+.train-form input[type=number]:focus,
 .submit-form:active,
 .submit-form:focus {
 	outline: none;

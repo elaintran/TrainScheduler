@@ -59,7 +59,6 @@ database.ref().on("child_added", function(snapshot) {
     newTrainTime = snapshot.val().firstTrainTime;
     newFrequency = snapshot.val().frequency;
     refKey = snapshot.key;
-    console.log(refKey);
     //use database items to find arrival time and minutes away
     //initial train time, subtracted one year off so it comes before current time
     var trainTimeConverted = moment(newTrainTime, "hh:mm").subtract(1, "years");
@@ -79,17 +78,21 @@ function createTrain() {
     //append the rows to table
     var rowElement = $("<tr>").attr("data-key", refKey);
     //individual datacells containing information from form
-    var nameCell = $("<td>").addClass("train-name").text(newTrain);
-    var destinationCell = $("<td>").text(newDestination);
-    var frequencyCell = $("<td>").text(newFrequency);
-    var arrivalCell = $("<td>").text(trainArrival);
+    var nameCell = $("<td>").addClass("train-cell").text(newTrain);
+    var destinationCell = $("<td>").addClass("destination-cell").text(newDestination);
+    var frequencyCell = $("<td>").addClass("frequency-cell").text(newFrequency);
+    var arrivalCell = $("<td>").attr("data-time", newTrainTime).addClass("arrival-cell").text(trainArrival);
     var minutesCell = $("<td>").text(minutesLeft);
     //ellipses icon toggle for dropdown
     var actionCell = $("<td>").addClass("dropdown");
     var actionIcon = $("<i>").addClass("fas fa-ellipsis-h").attr("data-toggle", "dropdown");
     //dropdown menu
     var dropdownContainer = $("<div>").addClass("dropdown-menu dropdown-menu-right").attr("aria-labelledby", "dropdownMenuButton");
-    var dropdownItemOne = $("<div>").addClass("dropdown-item edit-train");
+    var dropdownItemOne = $("<div>").addClass("dropdown-item edit-train")
+    dropdownItemOne.attr({
+        "data-toggle": "modal",
+        "data-target": "#edit-modal"
+    });
     var dropdownItemTwo = $("<div>").addClass("dropdown-item delete-train");
     //menu-items
     var editIcon = $("<i>").addClass("fas fa-pen");
@@ -106,4 +109,16 @@ $("tbody").on("click", ".delete-train", function() {
     var key = $(this).parents("tr").attr("data-key");
     $(this).parentsUntil("tbody").remove();
     database.ref(key).remove();
+})
+
+$("tbody").on("click", ".edit-train", function() {
+    var key = $(this).parents("tr").attr("data-key");
+    var editName = $(this).parents("td").siblings(".train-cell").text();
+    var editDestination = $(this).parents("td").siblings(".destination-cell").text();
+    var editFrequency = $(this).parents("td").siblings(".frequency-cell").text();
+    var editTrainTime = $(this).parents("td").siblings(".arrival-cell").attr("data-time");
+    $("#edit-name").val(editName);
+    $("#edit-destination").val(editDestination);
+    $("#edit-frequency").val(editFrequency);
+    $("#edit-train-time").val(editTrainTime);
 })
