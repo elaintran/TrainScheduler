@@ -13,63 +13,43 @@ firebase.initializeApp(config);
 var database = firebase.database();
 
 //global variables
+//initial variables
+var train;
+var destination;
+var firstTrainTime;
+var frequency;
 var newTrain;
+//snapshot variables
 var newDestination;
 var newTrainTime;
 var newFrequency;
 var minutesLeft;
 var trainArrival;
+//train object
+var addTrain;
+//snapshot key
 var refKey;
+var key;
+var edit = false;
 
 //when form is submitted, get values
 $(".schedule-form").on("submit", function(event) {
     //prevent page from refreshing
     event.preventDefault();
-    //get values from form fields and trim the white space
-    var trainName = $("#train-name").val().trim();
-    var destination = $("#destination").val().trim();
-    var firstTrainTime = $("#first-train-time").val().trim();
-    var frequency = $("#frequency").val().trim();
-    //if none of the form fields are empty
-    if (trainName !== "" && destination !== "" && firstTrainTime !== "" && frequency !== "") {
-        //clear values on form
-        $("#train-name").val("");
-        $("#destination").val("");
-        $("#first-train-time").val("");
-        $("#frequency").val("");
-        //hide modal on submit
-        $("#modal").modal("hide");
-    }
-    //create train object
-    var newTrain = {
-        train: trainName,
-        destination: destination,
-        firstTrainTime: firstTrainTime,
-        frequency: frequency
-    }
+    getValues("#train-name", "#destination", "#first-train-time", "#frequency", "#modal");
     //push new train into database
-    database.ref().push(newTrain);
+    database.ref().push(addTrain);
+    //clear values on form
+    $("#train-name").val("");
+    $("#destination").val("");
+    $("#first-train-time").val("");
+    $("#frequency").val("");
 })
 
 //when object is added into the database
 database.ref().on("child_added", function(snapshot) {
-    //set snapshot values as variables
-    newTrain = snapshot.val().train;
-    newDestination = snapshot.val().destination;
-    newTrainTime = snapshot.val().firstTrainTime;
-    newFrequency = snapshot.val().frequency;
     refKey = snapshot.key;
-    //use database items to find arrival time and minutes away
-    //initial train time, subtracted one year off so it comes before current time
-    var trainTimeConverted = moment(newTrainTime, "hh:mm").subtract(1, "years");
-    //subtract current time from first train time and return result in minutes
-    var diffTime = moment().diff(moment(trainTimeConverted), "minutes");
-    //use modulus to get the remainder, which is the number of minutes left 
-    var timeRemainder = diffTime % newFrequency;
-    //time from the frequency
-    minutesLeft = newFrequency - timeRemainder;
-    //add minutes left to current time and return result in minutes
-    trainArrival = moment().add(minutesLeft, "minutes").format("hh:mm");
+    convertTime(snapshot);
     //append to table
     createTrain();
 })
@@ -82,7 +62,7 @@ function createTrain() {
     var destinationCell = $("<td>").addClass("destination-cell").text(newDestination);
     var frequencyCell = $("<td>").addClass("frequency-cell").text(newFrequency);
     var arrivalCell = $("<td>").attr("data-time", newTrainTime).addClass("arrival-cell").text(trainArrival);
-    var minutesCell = $("<td>").text(minutesLeft);
+    var minutesCell = $("<td>").addClass("minutes-cell").text(minutesLeft);
     //ellipses icon toggle for dropdown
     var actionCell = $("<td>").addClass("dropdown");
     var actionIcon = $("<i>").addClass("fas fa-ellipsis-h").attr("data-toggle", "dropdown");
@@ -106,13 +86,13 @@ function createTrain() {
 }
 
 $("tbody").on("click", ".delete-train", function() {
-    var key = $(this).parents("tr").attr("data-key");
+    key = $(this).parents("tr").attr("data-key");
     $(this).parentsUntil("tbody").remove();
     database.ref(key).remove();
 })
 
 $("tbody").on("click", ".edit-train", function() {
-    var key = $(this).parents("tr").attr("data-key");
+    key = $(this).parents("tr").attr("data-key");
     var editName = $(this).parents("td").siblings(".train-cell").text();
     var editDestination = $(this).parents("td").siblings(".destination-cell").text();
     var editFrequency = $(this).parents("td").siblings(".frequency-cell").text();
@@ -122,3 +102,66 @@ $("tbody").on("click", ".edit-train", function() {
     $("#edit-frequency").val(editFrequency);
     $("#edit-train-time").val(editTrainTime);
 })
+
+$(".edit-form").on("submit", function(event) {
+    event.preventDefault();
+    getValues("#edit-name", "#edit-destination", "#edit-train-time", "#edit-frequency", "#edit-modal");
+    database.ref(key).set(addTrain);
+    edit = true;
+})
+
+database.ref().on("child_changed", function(snapshot) {
+    $("tr").each(function() {
+        if($(this).attr("data-key") === key) {
+            convertTime(snapshot);
+            $(this).children(".train-cell").text(newTrain);
+            $(this).children(".destination-cell").text(newDestination);
+            $(this).children(".frequency-cell").text(newFrequency);
+            $(this).children("arrival-cell").text(trainArrival);
+            console.log($(this).children("minutes-cell").text());
+        }
+    })
+    console.log(snapshot.val());
+})
+
+function getValues(trainName, trainDestination, trainTime, trainFrequency, modal) {
+    //get values from form fields and trim the white space
+    train = $(trainName).val().trim();
+    destination = $(trainDestination).val().trim();
+    firstTrainTime = $(trainTime).val().trim();
+    frequency = $(trainFrequency).val().trim();
+    //if none of the form fields are empty
+    if (train !== "" && destination !== "" && firstTrainTime !== "" && frequency !== "") {
+        //hide modal on submit
+        $(modal).modal("hide");
+    }
+    //create train object
+    addTrain = {
+        train: train,
+        destination: destination,
+        firstTrainTime: firstTrainTime,
+        frequency: frequency
+    }
+}
+
+function convertTime(snapshot) {
+    newTrain = snapshot.val().train;
+    newDestination = snapshot.val().destination;
+    newTrainTime = snapshot.val().firstTrainTime;
+    newFrequency = snapshot.val().frequency;
+    //use database items to find arrival time and minutes away
+    //initial train time, subtracted one year off so it comes before current time
+    var trainTimeConverted = moment(newTrainTime, "hh:mm").subtract(1, "years");
+    //subtract current time from first train time and return result in minutes
+    var diffTime = moment().diff(moment(trainTimeConverted), "minutes");
+    //use modulus to get the remainder, which is the number of minutes left 
+    var timeRemainder = diffTime % newFrequency;
+    //time from the frequency
+    minutesLeft = newFrequency - timeRemainder;
+    //add minutes left to current time and return result in minutes
+    trainArrival = moment().add(minutesLeft, "minutes").format("hh:mm");
+}
+
+//BUGS TO FIX
+//trainarrival and minutes left does not change when the content is changed
+//change dropdown menu to round corners on select
