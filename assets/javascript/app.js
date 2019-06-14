@@ -63,8 +63,9 @@ function createTrain() {
     var destinationFrom = $("<span>").text("Austin, TX");
     var arrow = $("<i>").addClass("fas fa-long-arrow-alt-right");
     destinationFrom.append(arrow);
-    var destinationCell = $("<div>").addClass("train-item destination-cell").text(newDestination);
-    destinationCell.prepend(destinationFrom);
+    var destinationContainer = $("<div>").addClass("train-item destination-container");
+    var destinationCell = $("<div>").addClass("destination-cell").text(newDestination);
+    destinationContainer.append(destinationFrom).append(destinationCell);
     var frequencyLabel = $("<div>").addClass("train-item frequency-label").text("Frequency (min)");
     var arrivalLabel = $("<div>").addClass("train-item arrival-label").text("Next Arrival");
     var minutesLabel = $("<div>").addClass("train-item minutes-label").text("Minutes Away");
@@ -89,7 +90,7 @@ function createTrain() {
     dropdownItemTwo.text(" Remove Train").prepend(trashIcon);
     dropdownContainer.append(dropdownItemOne).append(dropdownItemTwo);
     actionCell.append(actionIcon).append(dropdownContainer);
-    rowElement.append(nameCell).append(destinationCell).append(frequencyLabel).append(arrivalLabel).append(minutesLabel).append(frequencyCell).append(arrivalCell).append(minutesCell).append(actionCell);
+    rowElement.append(nameCell).append(destinationContainer).append(frequencyLabel).append(arrivalLabel).append(minutesLabel).append(frequencyCell).append(arrivalCell).append(minutesCell).append(actionCell);
     $(".schedule").append(rowElement);
 }
 
@@ -110,7 +111,8 @@ $(".schedule").on("click", ".edit-train", function() {
     key = $(this).parents(".train-row").attr("data-key");
     //get the current text of the train
     var editName = $(this).parents(".action").siblings(".train-cell").text();
-    var editDestination = $(this).parents(".action").siblings(".destination-cell").text();
+    //console.log($(this).parents(".action").siblings(".destination-cell").ignore("span").text());
+    var editDestination = $(this).parents(".action").siblings(".destination-container").children(".destination-cell").text();
     var editFrequency = $(this).parents(".action").siblings(".frequency-cell").text();
     var editTrainTime = $(this).parents(".action").siblings(".arrival-cell").attr("data-time");
     //use the text and place it as the edit value
@@ -131,7 +133,7 @@ database.ref().on("child_changed", function(snapshot) {
     $(".train-row").each(function() {
         if($(this).attr("data-key") === key) {
             $(this).children(".train-cell").text(newTrain);
-            $(this).children(".destination-cell").text(newDestination);
+            $(this).children(".destination-container").children(".destination-cell").text(newDestination);
             $(this).children(".frequency-cell").text(newFrequency);
             $(this).children(".arrival-cell").attr("data-time", newTrainTime).text(trainArrival);
             $(this).children(".minutes-cell").text(minutesLeft);

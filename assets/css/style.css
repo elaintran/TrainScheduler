@@ -93,7 +93,7 @@ body {
     font-weight: 600;
 }
 
-.destination-cell span {
+.destination-container span {
     display: none;
 }
 
@@ -272,7 +272,7 @@ body {
     .train-item {
         width: 33.333333%;
     }
-    .train-cell, .destination-cell {
+    .train-cell, .destination-container {
         width: 100%;
     }
     .train-cell {
@@ -283,12 +283,15 @@ body {
         font-size: 15px;
         margin: 0 15px;
     }
-    .destination-cell {
+    .destination-container {
         font-size: 17px;
         margin-top: -2px;
         margin-bottom: 10px;
     }
-    .destination-cell span {
+    .destination-container span {
+        display: inline-block;
+    }
+    .destination-cell {
         display: inline-block;
     }
     .frequency-label, .arrival-label, .minutes-label {
@@ -323,7 +326,7 @@ body {
     .train-cell {
         font-size: 20px;
     }
-    .destination-cell {
+    .destination-container {
         font-size: 14px;
     }
     .fa-long-arrow-alt-right {
@@ -356,7 +359,7 @@ body {
     .train-cell {
         font-size: 19px;
     }
-    .destination-cell {
+    .destination-container {
         font-size: 13px;
         margin-top: -1px;
         margin-bottom: 6px;
