@@ -59,8 +59,12 @@ function createTrain() {
     //append the rows to table
     var rowElement = $("<div>").attr("data-key", refKey).addClass("train-row");
     //individual datacells containing information from form
+    var trainIcon = $("<i>").addClass("fas fa-subway");
     var nameCell = $("<div>").addClass("train-item train-cell").text(newTrain);
     var destinationCell = $("<div>").addClass("train-item destination-cell").text(newDestination);
+    var frequencyLabel = $("<div>").addClass("train-item frequency-label").text("Frequency (min)");
+    var arrivalLabel = $("<div>").addClass("train-item arrival-label").text("Next Arrival");
+    var minutesLabel = $("<div>").addClass("train-item minutes-label").text("Minutes Away");
     var frequencyCell = $("<div>").addClass("train-item frequency-cell").text(newFrequency);
     var arrivalCell = $("<div>").attr("data-time", newTrainTime).addClass("train-item arrival-cell").text(trainArrival);
     var minutesCell = $("<div>").addClass("train-item minutes-cell").text(minutesLeft);
@@ -82,7 +86,7 @@ function createTrain() {
     dropdownItemTwo.text(" Remove Train").prepend(trashIcon);
     dropdownContainer.append(dropdownItemOne).append(dropdownItemTwo);
     actionCell.append(actionIcon).append(dropdownContainer);
-    rowElement.append(nameCell).append(destinationCell).append(frequencyCell).append(arrivalCell).append(minutesCell).append(actionCell);
+    rowElement.append(trainIcon).append(nameCell).append(destinationCell).append(frequencyLabel).append(arrivalLabel).append(minutesLabel).append(frequencyCell).append(arrivalCell).append(minutesCell).append(actionCell);
     $(".schedule").append(rowElement);
 }
 

@@ -17,6 +17,7 @@ body {
 .header h2 {
     margin-right: auto;
     font-weight: 600;
+    color: #333333;
 }
 
 .add-button {
@@ -52,12 +53,24 @@ body {
     padding: 20px 4px;
 }
 
+.train-row {
+    position: relative;
+}
+
+.train-row:nth-child(odd) {
+    background-color: white;
+}
+
 .train-row:nth-child(even) {
     background-color: #fafbfd;
 }
 
 .train-row:last-child {
     border-radius: 0 0 20px 20px;
+}
+
+.fa-subway {
+    display: none;
 }
 
 .title {
@@ -77,6 +90,12 @@ body {
 }
 
 .train-cell {
+    font-weight: 600;
+}
+
+.frequency-label, .arrival-label, .minutes-label {
+    display: none;
+    text-transform: uppercase;
     font-weight: 600;
 }
 
@@ -107,44 +126,6 @@ body {
 .dropdown-item:hover {
     cursor: pointer;
 }
-
-
-/* .schedule {
-    border-radius: 20px;
-}
-
-table {
-    border-collapse: collapse;
-    border-radius: 1em;
-    box-shadow: 0px 2px 20px 2px rgba(0, 0, 0, 0.02);
-    overflow: hidden;
-    width: 100%;
-    font-size: 12px;
-    margin-top: 25px;
-    text-align: center;
-}
-
-th {
-    text-transform: uppercase;
-    font-weight: 600;
-}
-
-th, td {
-    padding: 20px 4px;
-}
-
-thead tr,
-tbody tr:nth-child(even) {
-    background-color: white;
-}
-
-tbody tr:nth-child(odd) {
-    background-color: #fafbfd;
-}
-
-.train-cell {
-    font-weight: 600;
-} */
 
 .modal-title {
 	text-align: center;
@@ -240,4 +221,64 @@ tbody tr:nth-child(odd) {
 
 .modal-body {
 	padding-bottom: 25px;
+}
+
+@media screen and (max-width: 935px) {
+    .main-container {
+        margin: 0 4%;
+    }
+}
+
+@media screen and (max-width: 775px) {
+    .schedule {
+        background-color: transparent;
+    }
+    .schedule-title {
+        display: none;
+    }
+    .train-row {
+        flex-wrap: wrap;
+        border-radius: 20px;
+        margin-bottom: 20px;
+    }
+    .train-row:nth-child(even) {
+        background-color: white;
+    }
+    .train-item {
+        width: 33.333333%;
+    }
+    .fa-subway {
+        /* display: block; */
+        position: absolute;
+        font-size: 55px;
+        top: 30px;
+    }
+    .train-cell, .destination-cell {
+        width: 100%;
+    }
+    .train-cell {
+        font-size: 25px;
+    }
+    .destination-cell {
+        font-size: 20px;
+        margin-top: -5px;
+        margin-bottom: 10px;
+    }
+    .frequency-label, .arrival-label, .minutes-label {
+        display: block;
+        font-size: 13px;
+    }
+    .frequency-cell, .arrival-cell, .minutes-cell {
+    	font-size: 20px;
+        font-weight: 600;
+        margin-top: -5px;
+    }
+    .action {
+        position: absolute;
+        top: 21px;
+        right: 10px;
+    }
+    .action i {
+        font-size: 20px;
+    }
 }
