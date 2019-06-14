@@ -16,6 +16,7 @@ body {
 
 .header h2 {
     margin-right: auto;
+    margin-bottom: 0;
     font-weight: 600;
     color: #333333;
 }
@@ -69,7 +70,7 @@ body {
     border-radius: 0 0 20px 20px;
 }
 
-.fa-subway {
+.fa-long-arrow-alt-right {
     display: none;
 }
 
@@ -91,6 +92,10 @@ body {
 
 .train-cell {
     font-weight: 600;
+}
+
+.destination-cell span {
+    display: none;
 }
 
 .frequency-label, .arrival-label, .minutes-label {
@@ -230,6 +235,9 @@ body {
 }
 
 @media screen and (max-width: 775px) {
+    .add-button {
+        font-size: 13px;
+    }
     .schedule {
         background-color: transparent;
     }
@@ -247,22 +255,24 @@ body {
     .train-item {
         width: 33.333333%;
     }
-    .fa-subway {
-        /* display: block; */
-        position: absolute;
-        font-size: 55px;
-        top: 30px;
-    }
     .train-cell, .destination-cell {
         width: 100%;
     }
     .train-cell {
         font-size: 25px;
     }
+    .fa-long-arrow-alt-right {
+        display: inline-block;
+        font-size: 15px;
+        margin: 0 15px;
+    }
     .destination-cell {
-        font-size: 20px;
-        margin-top: -5px;
+        font-size: 17px;
+        margin-top: -2px;
         margin-bottom: 10px;
+    }
+    .destination-cell span {
+        display: inline-block;
     }
     .frequency-label, .arrival-label, .minutes-label {
         display: block;
