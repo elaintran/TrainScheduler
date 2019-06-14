@@ -346,6 +346,10 @@ body {
     .action i {
         font-size: 16px;
     }
+    .train-form {
+        padding-right: 0;
+        padding-left: 0;
+    }
 }
 
 @media screen and (max-width: 449px) {
