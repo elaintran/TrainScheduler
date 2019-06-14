@@ -5,13 +5,12 @@ body {
 }
 
 .main-container {
-    margin: 0px 10%;
+    margin: 50px 10%;
 }
 
 .header {
     display: flex;
     align-items: center;
-    margin-top: 50px;
 }
 
 .header h2 {
@@ -119,6 +118,7 @@ body {
 
 .dropdown-menu {
     border: 1px solid #ecedf1;
+    border-radius: 10px;
     padding: 0;
 }
 
@@ -127,8 +127,20 @@ body {
     padding: 12px 10px;
 }
 
+.dropdown-item:first-child {
+	border-radius: 10px 10px 0 0; 
+}
+
+.dropdown-item:last-child {
+	border-radius: 0 0 10px 10px;
+}
+
 .dropdown-item:hover {
     cursor: pointer;
+}
+
+.dropdown-item:active {
+    background-color: #4886ff;
 }
 
 .modal-title {
@@ -229,13 +241,13 @@ body {
 
 @media screen and (max-width: 935px) {
     .main-container {
-        margin: 0 4%;
+        margin: 50px 4%;
     }
 }
 
 @media screen and (max-width: 775px) {
     .main-container {
-        margin: 0 40px;
+        margin: 50px 40px;
     }
     .add-button {
         font-size: 13px;
@@ -250,6 +262,9 @@ body {
         flex-wrap: wrap;
         border-radius: 20px;
         margin-bottom: 20px;
+    }
+    .train-row:last-child {
+        border-radius: 20px;
     }
     .train-row:nth-child(even) {
         background-color: white;
@@ -303,7 +318,7 @@ body {
 
 @media screen and (max-width: 533px) {
     .main-container {
-        margin: 0 5%;
+        margin: 50px 5%;
     }
     .train-cell {
         font-size: 20px;
