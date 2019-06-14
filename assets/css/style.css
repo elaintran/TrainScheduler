@@ -124,7 +124,6 @@ body {
 
 .dropdown-item {
     font-size: 13px;
-    font-weight: 600;
     padding: 12px 10px;
 }
 
@@ -235,6 +234,9 @@ body {
 }
 
 @media screen and (max-width: 775px) {
+    .main-container {
+        margin: 0 40px;
+    }
     .add-button {
         font-size: 13px;
     }
@@ -290,5 +292,74 @@ body {
     }
     .action i {
         font-size: 20px;
+    }
+    .dropdown-item {
+        font-size: 14px;
+    }
+    .dropdown-item i {
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 533px) {
+    .main-container {
+        margin: 0 5%;
+    }
+    .train-cell {
+        font-size: 20px;
+    }
+    .destination-cell {
+        font-size: 14px;
+    }
+    .fa-long-arrow-alt-right {
+        font-size: 13px;
+        margin: 0 13px;
+    }
+    .frequency-label, .arrival-label, .minutes-label {
+        font-size: 11px;
+    }
+    .frequency-cell, .arrival-cell, .minutes-cell {
+    	font-size: 15px;
+        margin-top: -1px;
+    }
+    .action {
+        top: 24px;
+    }
+    .action i {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 449px) {
+    .header h2 {
+        font-size: 27px;
+    }
+    .add-button {
+        font-size: 12px;
+        padding: 0px 13px;
+    }
+    .train-cell {
+        font-size: 19px;
+    }
+    .destination-cell {
+        font-size: 13px;
+        margin-top: -1px;
+        margin-bottom: 6px;
+    }
+    .frequency-label, .arrival-label, .minutes-label {
+        font-size: 10px;
+    }
+    .frequency-cell, .arrival-cell, .minutes-cell {
+    	font-size: 13px;
+        margin-top: 0px;
+    }
+}
+
+@media screen and (max-width: 385px) {
+    .header h2 {
+        font-size: 23px;
+    }
+    .add-button {
+        font-size: 10px;
     }
 }
