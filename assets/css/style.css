@@ -254,6 +254,7 @@ body {
     }
     .schedule {
         background-color: transparent;
+        margin-top: 35px;
     }
     .schedule-title {
         display: none;
